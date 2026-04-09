@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_TOP_DOWN()
+
+
+Person(clienteUser, "Cliente", "Quem usa a aplicação")
+Person(salaoUser, "Salão", "Quem tem o salão de beleza")
+
+Container(web,"Aplicação Web","NextJs","Interface para os usuários interagirem com o sistema")
+Container(api,"API","NodeJs","Backend para processar as requisições da aplicação web")
+ContainerDb(db,"Banco de Dados","MySql","Armazena os dados do sistema")
+
+System_Ext(mapsExternal, "Google Maps", "Serviço de mapas para localização do salão")
+System_Ext(stripeExternal, "Stripe", "Serviço de pagamento para processar transações")
+System_Ext(emailExternal, "Email Service", "Serviço de email para notificações")
+System_Ext(loginExternal, "Google Auth", "Serviço de autenticação Google para usuários")
+
+Rel(clienteUser, web, "Usa para agendar serviços")
+Rel(salaoUser, web, "Usa para gerenciar agendamentos e serviços")
+Rel(web, api, "Faz requisições para")
+Rel(api, db, "Lê e escreve dados em")
+Rel(web, mapsExternal, "Usa para mostrar localização do salão")
+Rel(api, stripeExternal, "Usa para processar pagamentos")
+Rel(api, emailExternal, "Usa para enviar notificações de agendamento")
+Rel(web, loginExternal, "Usa para autenticar usuários")
+
+
+
+@enduml
