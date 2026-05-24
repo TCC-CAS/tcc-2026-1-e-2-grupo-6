@@ -1,0 +1,22 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Component(Cadastro_user,"Cadastro do cliente","NextJs","Cadastro do cliente na plataforma")
+Component(login_user,"Autenticação do cliente","NextJs","Autenticação do cliente na plataforma")
+Component(Visualizar_mapa_user,"Visualizar mapa","NextJs","Cliente visualiza o mapa da região")
+Component(Ver_salao_user,"Visualizar salão","NextJs","Cliente visualiza o salão que deseja agendar")
+Component(Fluxo_pagamento_user,"Pagamento","NextJs","Cliente realiza o pagamento do serviço")
+Component(Fluxo_agendamento_user,"Agendamento","NextJs","Cliente realiza o agendamento do serviço")
+
+Container(api,"API","NodeJs","Gerencia as requisições da aplicação")
+System_Ext(mapsExternal, "Google Maps", "Serviço de mapas para localização do salão")
+System_Ext(loginExternal, "Google Auth", "Serviço de autenticação Google para usuários")
+
+Rel(login_user, loginExternal, "Autentica cliente via Google")
+Rel(Cadastro_user, api, "Envia dados de cadastro do cliente")
+Rel(Visualizar_mapa_user, mapsExternal, "Exibe mapa com salões próximos")
+Rel(Fluxo_agendamento_user, api, "Envia dados do agendamento")
+Rel(Fluxo_pagamento_user, api, "Envia dados do pagamento")
+Rel(Ver_salao_user, api, "Busca dados do salão selecionado")
+
+@enduml

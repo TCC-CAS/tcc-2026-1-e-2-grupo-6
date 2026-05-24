@@ -1,0 +1,24 @@
+@startuml
+top to bottom direction
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+
+Component(Cadastro_estabelecimento,"Cadastro do estabelecimento","NextJs","Cadastro do estabelecimento na plataforma")
+Component(login_estabelecimento,"Autenticação do estabelecimento","NextJs","Autenticação do estabelecimento na plataforma")
+Component(Cadastrar_filial,"Cadastrar filial","NextJs","Cadastro de filiais do estabelecimento")
+Component(Cadastro_funcionarios_estabelecimento,"Cadastro de funcionários","NextJs","Cadastro dos funcionários do estabelecimento")
+Component(Cadastro_servicos_estabelecimento,"Cadastro de serviços","NextJs","Cadastro dos serviços oferecidos pelo estabelecimento")
+Component(Fluxo_agendamento_estabelecimento,"Visualização dos agendamentos","NextJs","Estabelecimento visualiza os agendamentos do período")
+
+
+Container(api,"API","NodeJs","Gerencia as requisições da aplicação")
+System_Ext(loginExternal, "Google Auth", "Serviço de autenticação Google para usuários")
+
+Rel(login_estabelecimento, loginExternal, "Autentica estabelecimento via Google")
+Rel(Cadastrar_filial, api, "Envia dados da filial")
+Rel(Cadastro_funcionarios_estabelecimento, api, "Envia dados dos funcionários")
+Rel(Cadastro_servicos_estabelecimento, api, "Envia dados dos serviços")
+Rel(Cadastro_estabelecimento, api, "Envia dados do estabelecimento")
+Rel(Fluxo_agendamento_estabelecimento, api, "Busca agendamentos do período")
+
+@enduml

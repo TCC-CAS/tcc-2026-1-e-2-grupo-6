@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+
+Component(AuthComponent,"Autenticação","NodeJs","Autenticação com o Google")
+Component(UsuarioComponent, "Usuário", "NodeJs", "Gerencia dados do usuário")
+Component(SalaoComponent ,"Cadastro do salão","NodeJs","Cadastro e gestão do salão")
+Component(ServicoComponent ,"Serviços","NodeJs","Cadastro de serviços")
+Component(FuncionarioComponent ,"Funcionários","NodeJs","Cadastro de funcionários")
+Component(AgendamentoComponent ,"Agendamento e pagamento","NodeJs","Agendamento e pagamento do serviço")
+
+ContainerDb(db,"Banco de Dados","MySql","Armazena os dados do sistema")
+
+System_Ext(stripeExternal, "Stripe", "Serviço de pagamento para processar transações")
+System_Ext(emailExternal, "Email Service", "Serviço de email para notificações")
+System_Ext(loginExternal, "Google Auth", "Serviço de autenticação Google para usuários")
+
+Rel(AuthComponent, loginExternal, "Autentica usuário via Google")
+Rel(UsuarioComponent, db, "Lê e escreve dados do usuário")
+Rel(SalaoComponent, db, "Lê e escreve dados do salão")
+Rel(ServicoComponent, db, "Lê e escreve dados dos serviços")
+Rel(FuncionarioComponent, db, "Lê e escreve dados dos funcionários")
+Rel(AgendamentoComponent, emailExternal, "Envia confirmação de agendamento")
+Rel(AgendamentoComponent, stripeExternal, "Processa pagamento do serviço")
+Rel(AgendamentoComponent, db, "Lê e escreve dados do agendamento")
+
+
+
+
+@enduml
